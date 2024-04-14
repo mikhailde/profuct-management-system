@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { View, Panel, PanelHeader } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
+import ProductTable from './components/ProductTable';
+import ProductModal from './components/ProductModal';
 
-function App() {
+interface Product {
+  name: string;
+  price: string;
+}
+
+const App = () => {
+  const [activePanel, setActivePanel] = useState('main');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSaveProduct = (product: Product) => {
+    setProducts([...products, product]);
+    closeModal();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Panel id="main">
+        <PanelHeader>
+          Магазин товаров
+        </PanelHeader>
+        <ProductTable
+          products={products}
+          onEdit={openModal}
+          onDelete={() => {}}
+        />
+      </Panel>
+      {showModal && (
+        <ProductModal
+          onClose={closeModal}
+          onSave={handleSaveProduct}
+        />
+      )}
     </div>
   );
-}
+};
 
 export default App;
