@@ -1,0 +1,12 @@
+{
+    "name": "vkontakte/internship-task",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Task\\": "src/"
+        }
+    },
+    "require": {
+        "ext-mysqli": "*"
+    }
+}
