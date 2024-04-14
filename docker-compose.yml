@@ -10,7 +10,7 @@ services:
         ports:
           - "80:80"
         volumes:
-          - ./www:/var/www
+          - ./backend:/var/www
           - ./config/nginx:/etc/nginx/conf.d
           - ./logs:/var/log/nginx/
         depends_on:
@@ -24,7 +24,7 @@ services:
           dockerfile: Dockerfile
         container_name: php
         volumes:
-          - ./www:/var/www
+          - ./backend:/var/www
           - ./config/php/php.ini:/usr/local/etc/php/php.ini
         ports:
           - "9001:9000"
@@ -44,7 +44,5 @@ services:
           MYSQL_ROOT_USER: root
           MYSQL_ROOT_PASSWORD: secret
           MYSQL_DATABASE: task
-          MYSQL_USER: root
-          MYSQL_PASSWORD: secret
         networks:
          - internal
